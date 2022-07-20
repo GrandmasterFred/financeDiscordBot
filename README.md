@@ -10,3 +10,5 @@ To do list:
 2. Displaying past financial usage based on month/year/type
 3. Financial analysis/ cost prediction
 4. Per user google drive integration so a copy of the finances are available online?
+
+To use, pull this repo, install the dependencies using pip and the requirement file, and add your bot token to the .env file (you have to make the .env file yourself)
