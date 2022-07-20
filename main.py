@@ -26,6 +26,7 @@ bot = Bot(command_prefix=startWith, intents=intents)
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Fred's wallet"))
 
 @bot.event
 async def on_message(message):
