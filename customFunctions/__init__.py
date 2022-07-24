@@ -44,7 +44,8 @@ def saveToFile(var):
         #    'day': 'day i guess',
         #    'hour': 'asdf',
         #    'minute': 'asdf',
-        #    'user': 'asdf'
+        #    'user': 'asdf',
+        #    'suffix': 'u'
         #}
         targetDir = os.path.normpath(os.path.join(os.getcwd(), 'data'))
         filename = str(var['year']) + "_" + str(var['month']) + "_" + str(var['user']) + '.csv'
@@ -59,7 +60,7 @@ def saveToFile(var):
             os.makedirs(targetDir)
 
         # this section will do the saving
-        toSave = [var['year'], var['month'], var['day'], var['cost'], var['type'], var['desc']]
+        toSave = [var['year'], var['month'], var['day'], var['cost'], var['type'], var['desc'], var['suffix']]
         toSave = pandas.DataFrame(toSave).transpose()
         # saving this to the csv file
         toSave.to_csv(filename, mode='a', header=False, index=False)
