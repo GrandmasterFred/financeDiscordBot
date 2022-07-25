@@ -169,7 +169,7 @@ async def gain(ctx, arg):
                 await message.edit(content='Noted, saving completed ✅')
 
 @bot.command(brief='Use when money is credited. amount, type, desc')
-async def gain(ctx, arg):
+async def credit(ctx, arg):
     # this section IS LITERALLY THE SAME AS THE LAST SECTION, JUST no negative
     # uses function to parse out amount, type, desc, and sends it back
     from customFunctions import parseAmount
@@ -227,6 +227,44 @@ async def gain(ctx, arg):
             if saveToFile(dict):
                 # this will edit the message that just just sent and add a check mark to double confirm
                 await message.edit(content='Noted, saving completed ✅')
+
+@bot.command(brief='Use to check for stats.')
+async def stats(ctx, arg):
+    print('this section is for stats')
+
+    dict = {
+        'year': datetime.now().year,
+        'month': datetime.now().month,
+        'day': datetime.now().day,
+        'user': str(ctx.message.author.mention)
+    }
+    # this section will read the csv file, and then show the credit, usage, and gain for the month
+    # also calculate the leftover i guess
+    from customFunctions import fetchCSV
+    df = fetchCSV(dict)
+
+    print(df)
+
+    print(df['month'])
+    currentMonth = df.loc[df['month'] == datetime.now().month]
+
+    monthUse = currentMonth.loc[currentMonth['notation'] == 'u']
+    monthGain = currentMonth.loc[currentMonth['notation'] == 'g']
+    monthCredit = currentMonth.loc[currentMonth['notation'] == 'c']
+    sumUse = monthUse['value'].sum()
+    sumGain = monthGain['value'].sum()
+    sumCredit = monthCredit['value'].sum()
+    print(sumUse)
+    print(sumGain)
+    print(sumCredit)
+
+    toSend = "This months use is: " + str(sumUse)
+    toSend += "\nThis months gain is: " + str(sumGain)
+    toSend += "\nThis months credit use is: " + str(sumCredit)
+
+    await ctx.send(toSend)
+
+
 
 bot.run(botToken)
 

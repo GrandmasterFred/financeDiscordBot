@@ -48,7 +48,7 @@ def saveToFile(var):
         #    'suffix': 'u'
         #}
         targetDir = os.path.normpath(os.path.join(os.getcwd(), 'data'))
-        filename = str(var['year']) + "_" + str(var['month']) + "_" + str(var['user']) + '.csv'
+        filename = str(var['year']) + "_" + str(var['user']) + '.csv'
         # removing illegal characters from filename
         for i in ['<', '>', '@']:
             filename = filename.replace(i, "")
@@ -79,5 +79,22 @@ def removeCommand(var):
         var.pop(0)
         var = ' '.join(var)
         return var
+    except Exception as e:
+        print(e)
+
+def fetchCSV(var):
+    import pandas as pd
+    import os
+    targetDir = os.path.normpath(os.path.join(os.getcwd(), 'data'))
+    filename = str(var['year']) + "_" + str(var['user']) + '.csv'
+    # removing illegal characters from filename
+    for i in ['<', '>', '@']:
+        filename = filename.replace(i, "")
+    filename = os.path.normpath(os.path.join(targetDir, filename))
+
+    try:
+        df = pd.read_csv(filename, header=None, usecols=[0, 1, 2, 3, 4, 5, 6], names=["year", "month", "day", "value",
+                                                                                      "cat", "desc", "notation"])
+        return df
     except Exception as e:
         print(e)
