@@ -34,6 +34,8 @@ def saveToFile(var):
         # inside, the format will be
         # year, month, day, hour, minute, cost, type, desc
 
+        # type would be u = use, g = gain, c = credit, r = repayment
+
         # this function accepts a dictionary of format
         #dict = {
         #    'cost': 'asdf',
@@ -92,6 +94,7 @@ def fetchCSV(var):
         filename = filename.replace(i, "")
     filename = os.path.normpath(os.path.join(targetDir, filename))
 
+    # reads the csv file, and then label all of them by headers and all that good stuff
     try:
         df = pd.read_csv(filename, header=None, usecols=[0, 1, 2, 3, 4, 5, 6], names=["year", "month", "day", "value",
                                                                                       "cat", "desc", "notation"])
